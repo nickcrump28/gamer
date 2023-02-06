@@ -1,5 +1,5 @@
 function LoadLibrary(a)
- return loadstring(game:HttpGet("https://pastebin.com/raw/UfzKgS6T", true))()
+	return loadstring(game:HttpGet("https://pastebin.com/raw/UfzKgS6T", true))()
 end
 
 loadstring(game:GetObjects("rbxassetid://4480871791")[1].Source)()
@@ -209,38 +209,68 @@ end
 end
 end)()
 
-function damagealll(Radius,Position)  
- local Returning = {}  
- for _,v in pairs(workspace:GetChildren()) do  
-  if v~=Character and v:FindFirstChildOfClass('Humanoid') and v:FindFirstChild('Torso') or v:FindFirstChild('UpperTorso') then
-if v:FindFirstChild("Torso") then  
-   local Mag = (v.Torso.Position - Position).magnitude  
-   if Mag < Radius xss=removed xss=removed ArtificialHB.Name = "Heartbeat" xss=removed xss=removed xss=removed xss=removed xss=removed xss=removed>= frame then
-  if allowframeloss then
-   script.Heartbeat:Fire()
-   lastframe = tick()
-  else
-   for i = 1, math.floor(tf / frame) do
-    script.Heartbeat:Fire()
-   end
-   lastframe = tick()
-  end
-  if tossremainder then
-   tf = 0
-  else
-   tf = tf - frame * math.floor(tf / frame)
-  end
- end
+function damagealll(Radius,Position)		
+	local Returning = {}		
+	for _,v in pairs(workspace:GetChildren()) do		
+		if v~=Character and v:FindFirstChildOfClass('Humanoid') and v:FindFirstChild('Torso') or v:FindFirstChild('UpperTorso') then
+if v:FindFirstChild("Torso") then		
+			local Mag = (v.Torso.Position - Position).magnitude		
+			if Mag < Radius then		
+				table.insert(Returning,v)		
+			end
+elseif v:FindFirstChild("UpperTorso") then	
+			local Mag = (v.UpperTorso.Position - Position).magnitude		
+			if Mag < Radius then		
+				table.insert(Returning,v)		
+			end
+end	
+		end		
+	end		
+	return Returning		
+end
+
+ArtificialHB = Instance.new("BindableEvent", script)
+ArtificialHB.Name = "Heartbeat"
+script:WaitForChild("Heartbeat")
+
+frame = 1 / 60
+tf = 0
+allowframeloss = false
+tossremainder = false
+
+
+lastframe = tick()
+script.Heartbeat:Fire()
+
+
+game:GetService("RunService").Heartbeat:connect(function(s, p)
+	tf = tf + s
+	if tf >= frame then
+		if allowframeloss then
+			script.Heartbeat:Fire()
+			lastframe = tick()
+		else
+			for i = 1, math.floor(tf / frame) do
+				script.Heartbeat:Fire()
+			end
+			lastframe = tick()
+		end
+		if tossremainder then
+			tf = 0
+		else
+			tf = tf - frame * math.floor(tf / frame)
+		end
+	end
 end)
 
 function swait(num)
- if num == 0 or num == nil then
-  game:service("RunService").Stepped:wait(0)
- else
-  for i = 0, num do
-   game:service("RunService").Stepped:wait(0)
-  end
- end
+	if num == 0 or num == nil then
+		game:service("RunService").Stepped:wait(0)
+	else
+		for i = 0, num do
+			game:service("RunService").Stepped:wait(0)
+		end
+	end
 end
 
 for _,n in pairs(Character:GetChildren()) do
@@ -857,7 +887,7 @@ end
 end)
 
 function ray(pos, dir, rang, ignoredesc)
- return workspace:FindPartOnRay(Ray.new(pos, dir.unit * rang), ignoredesc)
+	return workspace:FindPartOnRay(Ray.new(pos, dir.unit * rang), ignoredesc)
 end
 
 function ray2(startpos, endpos, distance, ignore)
@@ -872,7 +902,9 @@ if Root.Velocity.y > 1 then
 position = "Jump"
 elseif Root.Velocity.y < -1 then
 position = "Falling"
-elseif Root.Velocity.Magnitude < 2 position = "Idle"> 2 then
+elseif Root.Velocity.Magnitude < 2 then
+position = "Idle"
+elseif Root.Velocity.Magnitude > 2 then
 position = "Walking"
 elseif Root.Velocity.Magnitude > 20 then
 position = "Running"
@@ -884,7 +916,7 @@ end)
 checks1()
 
 function ray(POSITION, DIRECTION, RANGE, IGNOREDECENDANTS)
- return workspace:FindPartOnRay(Ray.new(POSITION, DIRECTION.unit * RANGE), IGNOREDECENDANTS)
+	return workspace:FindPartOnRay(Ray.new(POSITION, DIRECTION.unit * RANGE), IGNOREDECENDANTS)
 end
 
 function ray2(StartPos, EndPos, Distance, Ignore)
@@ -915,65 +947,65 @@ end)
 movelimbs()
 immortal = {}
 for i,v in pairs(Character:GetDescendants()) do
- if v:IsA("BasePart") and v.Name ~= "lmagic" and v.Name ~= "rmagic" then
-  if v ~= Root and v ~= Torso and v ~= Head and v ~= RightArm and v ~= LeftArm and v ~= RightLeg and v.Name ~= "lmagic" and v.Name ~= "rmagic" and v ~= LeftLeg then
-   v.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0, 0, 0)
-  end
-  table.insert(immortal,{v,v.Parent,v.Material,v.Color,v.Transparency})
- elseif v:IsA("JointInstance") then
-  table.insert(immortal,{v,v.Parent,nil,nil,nil})
- end
+	if v:IsA("BasePart") and v.Name ~= "lmagic" and v.Name ~= "rmagic" then
+		if v ~= Root and v ~= Torso and v ~= Head and v ~= RightArm and v ~= LeftArm and v ~= RightLeg and v.Name ~= "lmagic" and v.Name ~= "rmagic" and v ~= LeftLeg then
+			v.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0, 0, 0)
+		end
+		table.insert(immortal,{v,v.Parent,v.Material,v.Color,v.Transparency})
+	elseif v:IsA("JointInstance") then
+		table.insert(immortal,{v,v.Parent,nil,nil,nil})
+	end
 end
 for e = 1, #immortal do
- if immortal[e] ~= nil then
-  local STUFF = immortal[e]
-  local PART = STUFF[1]
-  local PARENT = STUFF[2]
-  local MATERIAL = STUFF[3]
-  local COLOR = STUFF[4]
-  local TRANSPARENCY = STUFF[5]
+	if immortal[e] ~= nil then
+		local STUFF = immortal[e]
+		local PART = STUFF[1]
+		local PARENT = STUFF[2]
+		local MATERIAL = STUFF[3]
+		local COLOR = STUFF[4]
+		local TRANSPARENCY = STUFF[5]
 if levitate then
-  if PART.ClassName == "Part" and PART ~= Root and PART.Name ~= eyo1 and PART.Name ~= eyo2 and PART.Name ~= "lmagic" and PART.Name ~= "rmagic" then
-   PART.Material = MATERIAL
-   PART.Color = COLOR
-   PART.Transparency = TRANSPARENCY
-  end
-  PART.AncestryChanged:connect(function()
-   PART.Parent = PARENT
-  end)
+		if PART.ClassName == "Part" and PART ~= Root and PART.Name ~= eyo1 and PART.Name ~= eyo2 and PART.Name ~= "lmagic" and PART.Name ~= "rmagic" then
+			PART.Material = MATERIAL
+			PART.Color = COLOR
+			PART.Transparency = TRANSPARENCY
+		end
+		PART.AncestryChanged:connect(function()
+			PART.Parent = PARENT
+		end)
 else
-  if PART.ClassName == "Part" and PART ~= Root and PART.Name ~= "lmagic" and PART.Name ~= "rmagic" then
-   PART.Material = MATERIAL
-   PART.Color = COLOR
-   PART.Transparency = TRANSPARENCY
-  end
-  PART.AncestryChanged:connect(function()
-   PART.Parent = PARENT
-  end)
+		if PART.ClassName == "Part" and PART ~= Root and PART.Name ~= "lmagic" and PART.Name ~= "rmagic" then
+			PART.Material = MATERIAL
+			PART.Color = COLOR
+			PART.Transparency = TRANSPARENCY
+		end
+		PART.AncestryChanged:connect(function()
+			PART.Parent = PARENT
+		end)
 end
- end
+	end
 end
 function immortality()
- for e = 1, #immortal do
-  if immortal[e] ~= nil then
-   local STUFF = immortal[e]
-   local PART = STUFF[1]
-   local PARENT = STUFF[2]
-   local MATERIAL = STUFF[3]
-   local COLOR = STUFF[4]
-   local TRANSPARENCY = STUFF[5]
-   if PART.ClassName == "Part" and PART == Root then
-    PART.Material = MATERIAL
-    PART.Color = COLOR
-    PART.Transparency = TRANSPARENCY
-   end
-   if PART.Parent ~= PARENT then
-    hum:Remove()
-    PART.Parent = PARENT
-    hum = Instance.new("Humanoid",Character)
-   end
-  end
- end
+	for e = 1, #immortal do
+		if immortal[e] ~= nil then
+			local STUFF = immortal[e]
+			local PART = STUFF[1]
+			local PARENT = STUFF[2]
+			local MATERIAL = STUFF[3]
+			local COLOR = STUFF[4]
+			local TRANSPARENCY = STUFF[5]
+			if PART.ClassName == "Part" and PART == Root then
+				PART.Material = MATERIAL
+				PART.Color = COLOR
+				PART.Transparency = TRANSPARENCY
+			end
+			if PART.Parent ~= PARENT then
+				hum:Remove()
+				PART.Parent = PARENT
+				hum = Instance.new("Humanoid",Character)
+			end
+		end
+	end
 end
 coroutine.wrap(function()
 while true do
